@@ -20,7 +20,8 @@ st.title("Birdsong classifier :bird:")
 
 
 st.markdown("### Audio Recorder")
-audiorec = audiorecorder("Click to record", "Click to stop recording")
+audio = audiorecorder("Click to record", "Click to stop recording")
+audiorec = audio
 if len(audiorec) > 0 :
     audio = AudioSegment.from_file(audiorec)
     audio = audio[1000:4000]

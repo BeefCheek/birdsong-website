@@ -77,7 +77,7 @@ if st.button('bird species prediction'):
         print(predict_bird, predict_conf)
     elif predict_conf < 0.55:
         st.write(predict_bird)
-        st.image(im, caption=predict_bird, width=1200)
+        st.image(im, caption=predict_bird, width=800)
         print(predict_conf)
     else :
         st.write(predict_bird)

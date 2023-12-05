@@ -1,7 +1,6 @@
-
 pyaudio
 streamlit
 numpy
 requests
-audiorecorder
 pydub
+streamlit-audiorecorder

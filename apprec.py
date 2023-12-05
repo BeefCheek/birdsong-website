@@ -4,7 +4,9 @@ import requests
 import streamlit as st
 from audiorecorder import audiorecorder
 from pydub import AudioSegment
-from io import BytesIO
+from io import BytesIO, StringIO
+from PIL import Image
+
 
 st.set_page_config(
     page_title="Bird Class",
@@ -24,7 +26,7 @@ uploaded_file = st.file_uploader("Choose a file", type = ['mp3'])
 
 bytes_audio = None
 
-url_pred = 'http://127.0.0.1:8000'
+url_pred = 'https://apibird-zz4jm4gkda-ew.a.run.app'
 
 if uploaded_file is not None:
 
@@ -50,9 +52,10 @@ if bytes_audio is not None :
     predict_bird = res.json()['bird']
     predict_conf = res.json()['confidence']
 
-
-
-
+if res is not None :
+    spec = predict_bird.lower().replace(' ', '_').replace('-', '_')
+    #url_img = f"https://storage.cloud.google.com/birdbucket_images/bird_imgs/{spec}.jpg"
+    im = Image.open(f'bird_imgs/{spec}.jpg')
 
 
 if st.button('bird species prediction'):
@@ -63,10 +66,12 @@ if st.button('bird species prediction'):
         print(predict_bird, predict_conf)
     elif predict_conf < 0.55:
         st.write(predict_bird)
-        #st.write(f"{np.round(predict_conf, 4)*100}% of confidence.")
+        st.image(im, caption=predict_bird)
         print(predict_conf)
     else :
         st.write(predict_bird)
+        st.image(im, caption=predict_bird)
+
         st.write(f"{np.round(predict_conf, 4)*100}% of confidence.")
 
 

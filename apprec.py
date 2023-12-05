@@ -52,10 +52,10 @@ if bytes_audio is not None :
     predict_bird = res.json()['bird']
     predict_conf = res.json()['confidence']
 
-if res is not None :
-    spec = predict_bird.lower().replace(' ', '_').replace('-', '_')
-    #url_img = f"https://storage.cloud.google.com/birdbucket_images/bird_imgs/{spec}.jpg"
-    im = Image.open(f'bird_imgs/{spec}.jpg')
+    if res is not None :
+        spec = predict_bird.lower().replace(' ', '_').replace('-', '_')
+        #url_img = f"https://storage.cloud.google.com/birdbucket_images/bird_imgs/{spec}.jpg"
+        im = Image.open(f'bird_imgs/{spec}.jpg')
 
 
 if st.button('bird species prediction'):

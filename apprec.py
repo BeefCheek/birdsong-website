@@ -17,7 +17,7 @@ st.set_page_config(
 
 st.title("Birdsong classifier :bird:")
 
-
+bytes_audio = None
 
 st.markdown("### Audio Recorder")
 audio = audiorecorder("Click to record", "Click to stop recording")
@@ -34,7 +34,7 @@ if len(audiorec) > 0 :
 st.markdown('### Audio Uploader')
 uploaded_file = st.file_uploader("Choose a .mp3 file", type = ['mp3'])
 
-bytes_audio = None
+
 
 url_pred = 'https://apibird-zz4jm4gkda-ew.a.run.app'
 

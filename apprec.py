@@ -4,6 +4,7 @@ import requests
 import streamlit as st
 from audiorecorder import audiorecorder
 from pydub import AudioSegment
+from io import BytesIO
 
 st.set_page_config(
     page_title="Bird Class",
@@ -14,44 +15,60 @@ st.title("Birdsong classifier :bird:")
 
 
 
-st.title("Audio Recorder")
+st.markdown("### Audio Recorder")
 audio = audiorecorder("Click to record", "Click to stop recording")
 
-st.title('Audio Uploader')
-uploaded_file = st.file_uploader("Choose a file")
-if uploaded_file is not None:
-    # To read file as bytes:
-    #bytes_data = uploaded_file.getvalue()
-    audio = AudioSegment.from_file(uploaded_file)
 
+st.markdown('### Audio Uploader')
+uploaded_file = st.file_uploader("Choose a file", type = ['mp3'])
+
+bytes_audio = None
+
+url_pred = 'http://127.0.0.1:8000'
+
+if uploaded_file is not None:
+
+    audio = AudioSegment.from_file(uploaded_file, format='mp3')
+    audio = audio[2000:5000]
+    output_buffer = BytesIO()
+    audio.export(output_buffer, format="mp3")
+
+    # Get the bytes from the BytesIO object
+    bytes_audio = output_buffer.getvalue()
+
+    #st.write(requests.get('http://127.0.0.1:8000/files'))
 if len(audio) > 0:
+
     # To play audio in frontend:
-    st.audio(audio[2000:5000].export(bitrate='312').read())
+    st.audio(audio.export(bitrate='320').read())
 
     # To save audio to a file, use pydub export method:
-    audio[2000:5000].export("../to_predict/to_predict.mp3", format="mp3")
+    audio.export("../to_predict/to_predict.mp3", format="mp3")
 
-    # To get audio properties, use pydub AudioSegment properties:
-    #st.write(f"Frame rate: {audio.frame_rate}, Frame width: {audio.frame_width}, Duration: {audio.duration_seconds} seconds")
+if bytes_audio is not None :
+    res = requests.post(url = f"{url_pred}/uploadfile_predict?", files={'file': bytes_audio})
+    predict_bird = res.json()['bird']
+    predict_conf = res.json()['confidence']
 
 
 
-url = 'http://127.0.0.1:8000/predict'
-path = '../to_predict/to_predict.mp3'
 
-url_dict = f"{url}?path={path}"
-predict = requests.get(url_dict)
-predict_bird = predict.json()['bird']
-predict_conf = predict.json()['confidence']
 
 
 if st.button('bird species prediction'):
     # print is visible in the server output, not in the page
     print('button clicked!')
-    if predict_conf < 0.45:
+    if predict_conf < 0.35:
         st.write('prediction failed, confidence too low')
-    else:
+        print(predict_bird, predict_conf)
+    elif predict_conf < 0.55:
+        st.write(predict_bird)
+        #st.write(f"{np.round(predict_conf, 4)*100}% of confidence.")
+        print(predict_conf)
+    else :
         st.write(predict_bird)
         st.write(f"{np.round(predict_conf, 4)*100}% of confidence.")
+
+
 else:
     st.write('bird species not predicted')

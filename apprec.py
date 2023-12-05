@@ -16,7 +16,7 @@ st.set_page_config(
     page_icon=":bird:")
 
 st.title("Piaffnet :bird:")
-st.markdown('#### Birdsong Classifier')
+st.subheader('Birdsong Classifier')
 
 bytes_audio = None
 

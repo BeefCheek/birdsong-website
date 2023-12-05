@@ -8,6 +8,8 @@ from io import BytesIO, StringIO
 from PIL import Image
 
 
+
+
 st.set_page_config(
     page_title="Bird Class",
     layout="centered",
@@ -45,7 +47,7 @@ if len(audio) > 0:
     st.audio(audio.export(bitrate='320').read())
 
     # To save audio to a file, use pydub export method:
-    audio.export("../to_predict/to_predict.mp3", format="mp3")
+    #audio.export("../to_predict/to_predict.mp3", format="mp3")
 
 if bytes_audio is not None :
     res = requests.post(url = f"{url_pred}/uploadfile_predict?", files={'file': bytes_audio})

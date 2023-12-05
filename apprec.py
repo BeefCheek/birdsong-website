@@ -22,7 +22,7 @@ audio = audiorecorder("Click to record", "Click to stop recording")
 
 
 st.markdown('### Audio Uploader')
-uploaded_file = st.file_uploader("Choose a file", type = ['mp3'])
+uploaded_file = st.file_uploader("Choose a .mp3 file", type = ['mp3'])
 
 bytes_audio = None
 
@@ -31,7 +31,7 @@ url_pred = 'https://apibird-zz4jm4gkda-ew.a.run.app'
 if uploaded_file is not None:
 
     audio = AudioSegment.from_file(uploaded_file, format='mp3')
-    audio = audio[2000:5000]
+    audio = audio[1000:4000]
     output_buffer = BytesIO()
     audio.export(output_buffer, format="mp3")
 
@@ -66,7 +66,7 @@ if st.button('bird species prediction'):
         print(predict_bird, predict_conf)
     elif predict_conf < 0.55:
         st.write(predict_bird)
-        st.image(im, caption=predict_bird)
+        st.image(im, caption=predict_bird, width=1200)
         print(predict_conf)
     else :
         st.write(predict_bird)

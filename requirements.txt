@@ -3,5 +3,4 @@ numpy
 requests
 audiorecorder
 pydub
-io
 PIL

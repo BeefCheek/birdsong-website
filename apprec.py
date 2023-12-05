@@ -11,7 +11,7 @@ from PIL import Image
 
 
 st.set_page_config(
-    page_title="Bird Class",
+    page_title="Piaffnet",
     layout="centered",
     page_icon=":bird:")
 

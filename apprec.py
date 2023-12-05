@@ -23,7 +23,6 @@ st.markdown("### Audio Recorder")
 audio = audiorecorder("Click to record", "Click to stop recording")
 audiorec = audio
 if len(audiorec) > 0 :
-    audio = AudioSegment.from_file(audiorec)
     audio = audio[1000:4000]
     output_buffer = BytesIO()
     audio.export(output_buffer, format="mp3")

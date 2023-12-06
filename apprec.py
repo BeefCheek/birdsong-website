@@ -19,6 +19,7 @@ st.title("Piaffnet :bird:")
 st.write('Birdsong Classifier')
 
 bytes_audio = None
+predict_conf = None
 
 st.markdown("### Audio Recorder")
 audio = audiorecorder("Click to record", "Click to stop recording")
@@ -74,7 +75,7 @@ if bytes_audio is not None :
         #url_img = f"https://storage.cloud.google.com/birdbucket_images/bird_imgs/{spec}.jpg"
         im = Image.open(f'bird_imgs/{spec}.jpg')
 
-predict_conf = None
+
 if st.button('bird species prediction'):
     # print is visible in the server output, not in the page
     print('button clicked!')

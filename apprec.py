@@ -23,13 +23,16 @@ bytes_audio = None
 st.markdown("### Audio Recorder")
 audio = audiorecorder("Click to record", "Click to stop recording")
 audiorec = audio
-if len(audiorec) > 0 :
-    audio = audio[1000:4000]
-    output_buffer = BytesIO()
-    audio.export(output_buffer, format="mp3")
+if len(audiorec) > 0:
+    if len(audiorec) > 4000 :
+        audio = audio[1000:4000]
+        output_buffer = BytesIO()
+        audio.export(output_buffer, format="mp3")
 
-    # Get the bytes from the BytesIO object
-    bytes_audio = output_buffer.getvalue()
+        # Get the bytes from the BytesIO object
+        bytes_audio = output_buffer.getvalue()
+    else :
+        st.write('recording too short, please record at least 4 seconds.')
 
 
 st.markdown('### Audio Uploader')
@@ -42,12 +45,15 @@ url_pred = 'https://apibird-zz4jm4gkda-ew.a.run.app'
 if uploaded_file is not None:
 
     audio = AudioSegment.from_file(uploaded_file, format='mp3')
-    audio = audio[1000:4000]
-    output_buffer = BytesIO()
-    audio.export(output_buffer, format="mp3")
+    if len(audiorec) > 4000 :
+        audio = audio[1000:4000]
+        output_buffer = BytesIO()
+        audio.export(output_buffer, format="mp3")
 
-    # Get the bytes from the BytesIO object
-    bytes_audio = output_buffer.getvalue()
+        # Get the bytes from the BytesIO object
+        bytes_audio = output_buffer.getvalue()
+    else :
+        st.write('file too short, please updload a file that is at least 4 seconds long.')
 
     #st.write(requests.get('http://127.0.0.1:8000/files'))
 if len(audio) > 0:

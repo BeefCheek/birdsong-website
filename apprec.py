@@ -46,7 +46,7 @@ url_pred = 'https://apibird-zz4jm4gkda-ew.a.run.app'
 if uploaded_file is not None:
 
     audio = AudioSegment.from_file(uploaded_file, format='mp3')
-    if len(audiorec) > 4000 :
+    if len(audio) > 4000 :
         audio = audio[1000:3000]
         output_buffer = BytesIO()
         audio.export(output_buffer, format="mp3")

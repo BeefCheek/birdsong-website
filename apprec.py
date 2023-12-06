@@ -69,11 +69,13 @@ if bytes_audio is not None :
     res = requests.post(url = f"{url_pred}/uploadfile_predict?", files={'file': bytes_audio})
     predict_bird = res.json()['bird']
     predict_conf = res.json()['confidence']
+    bytes_audio = None
 
     if res is not None :
         spec = predict_bird.lower().replace(' ', '_').replace('-', '_')
         #url_img = f"https://storage.cloud.google.com/birdbucket_images/bird_imgs/{spec}.jpg"
         im = Image.open(f'bird_imgs/{spec}.jpg')
+        res = None
 
 
 if st.button('bird species prediction'):

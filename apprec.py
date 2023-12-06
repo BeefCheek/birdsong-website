@@ -46,7 +46,7 @@ if uploaded_file is not None:
 
     audio = AudioSegment.from_file(uploaded_file, format='mp3')
     if len(audiorec) > 4000 :
-        audio = audio[1000:4000]
+        audio = audio[1000:3000]
         output_buffer = BytesIO()
         audio.export(output_buffer, format="mp3")
 
@@ -82,15 +82,17 @@ if st.button('bird species prediction'):
         if predict_conf < 0.35:
             st.write('prediction failed, confidence too low')
             print(predict_bird, predict_conf)
+            predict_conf = None
         elif predict_conf < 0.55:
             st.write(predict_bird)
             st.image(im, caption=predict_bird, width=800)
             print(predict_conf)
+            predict_conf = None
         else :
             st.write(predict_bird)
             st.image(im, caption=predict_bird)
-
             st.write(f"{np.round(predict_conf, 4)*100}% of confidence.")
+            predict_conf = None
     else :
         st.write('no file to predict')
 

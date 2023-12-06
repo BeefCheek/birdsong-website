@@ -57,6 +57,10 @@ if uploaded_file is not None:
         st.write('file too short, please upload a file that is at least 4 seconds long.')
 
     #st.write(requests.get('http://127.0.0.1:8000/files'))
+
+    if output_buffer is not None :
+        st.audio(output_buffer.read())
+
 if len(audio) > 0:
 
     # To play audio in frontend:

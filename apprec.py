@@ -53,7 +53,7 @@ if uploaded_file is not None:
         # Get the bytes from the BytesIO object
         bytes_audio = output_buffer.getvalue()
     else :
-        st.write('file too short, please updload a file that is at least 4 seconds long.')
+        st.write('file too short, please upload a file that is at least 4 seconds long.')
 
     #st.write(requests.get('http://127.0.0.1:8000/files'))
 if len(audio) > 0:

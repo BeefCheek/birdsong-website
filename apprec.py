@@ -95,7 +95,7 @@ if st.button('bird species prediction'):
         else :
             st.write(predict_bird)
             st.image(im, caption=predict_bird)
-            st.write(f"{np.round(predict_conf, 4)*100}% of confidence.")
+            st.write(f"{np.round(predict_conf, decimals=4)*100}% of confidence.")
             predict_conf = None
     else :
         st.write('no file to predict')
